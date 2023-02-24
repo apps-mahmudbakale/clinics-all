@@ -46,7 +46,7 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleFormRequest $request)
+    public function store(Request $request)
     {
         $this->authorize('create-roles');
 
@@ -80,7 +80,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $this->authorize('update-roles');
-        $permissions = Permission::all()->pluck('name', 'id');
+        $permissions = Permission::all();
         return view('roles.edit', compact('role', 'permissions'));
     }
 

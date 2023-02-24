@@ -38,17 +38,16 @@
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{asset('js/alpine.min.js')}}"></script>
+    {{-- <script src="{{asset('js/alpine.min.js')}}"></script> --}}
 </head>
 
-<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed control-sidebar-slide-open">
+<body class="sidebar-mini layout-fixed layout-navbar-fixed" style="height: auto;">
     <div class="wrapper">
         @include('partials.header')
         @include('partials.sidebar')
         @yield('content')
     </div>
     @livewireScripts
-    @livewire('livewire-ui-modal')
     <script src="{{ asset('js/sweetalert2.min.js') }}"></script>
     <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
@@ -71,6 +70,32 @@
                 timer: 5500
             })
         @endif
+    </script> @livewireScripts
+    <script src="{{ asset('js/sweetalert2.min.js') }}"></script>
+    <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
+    <script>
+        @if (session()->has('success'))
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '{{ session()->get('success') }}',
+                showConfirmButton: true,
+                timer: 2500
+            })
+        @elseif (session()->has('error'))
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: '{{ session()->get('error') }}',
+                showConfirmButton: true,
+                timer: 5500
+            })
+        @endif
+    </script>
+    <script>
+        @stack('body-scripts')
     </script>
 </body>
 

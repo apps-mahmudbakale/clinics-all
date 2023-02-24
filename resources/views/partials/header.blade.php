@@ -1,12 +1,21 @@
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-dark navbar-success">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
           <li class="nav-item">
               <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
           </li>
       </ul>
-
+      <form class="form-inline ml-3"  style="width: 84%">
+        <div class="input-group input-group-sm" style="width: 84%">
+          <input class="form-control form-control-navbar" type="search" id="form" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-navbar" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
       <ul class="navbar-nav ml-auto">
           <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
               <i class="far fa-user"></i>
@@ -30,3 +39,10 @@
       <!-- Right navbar links -->
   </nav>
   <!-- /.navbar -->
+<script>
+  let form = document.getElementById('form');
+
+  form.addEventListener('click', function () {
+    alert('hell');
+  })
+</script>

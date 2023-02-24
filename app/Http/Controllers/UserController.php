@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserFormRequest;
-use App\Http\Requests\UserUpdateFormRequest;
 
 class UserController extends Controller
 {
@@ -15,19 +13,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
-        $this->authorize('read-users');
-
-        $users = User::all();
-        return view('users.index', compact('users'));
-
-        //dd($users);
+        return view('users.index');
     }
 
     /**
@@ -37,9 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('create-users');
         $roles = Role::all();
-
         return view('users.create', compact('roles'));
     }
 
@@ -49,12 +35,10 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserFormRequest $request)
+    public function store(Request $request)
     {
-        $this->authorize('create-users');
-        $user = User::create($request->all());
+        $user = User::create(array_merge($request->except('password'), ['password' => bcrypt($request->password)]));
         $user->syncRoles($request->input('roles', []));
-
         return redirect()->route('app.users.index')->with('success', 'User Added');
     }
 
@@ -64,11 +48,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        $this->authorize('read-users');
-
-        return view('users.show', compact('user'));
+        //
     }
 
     /**
@@ -79,10 +61,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('update-users');
-
         $roles = Role::all();
-        return view('users.edit', compact('roles','user'));
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -92,14 +72,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdateFormRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $this->authorize('update-users');
-
         $user->update($request->all());
-        $user->syncRoles($request->input('roles', []));
-
-        return redirect()->route('app.users.index')->with('success','User Updated');
+        return redirect()->route('app.users.index')->with('success', 'User Updated');
     }
 
     /**
@@ -110,8 +86,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $this->authorize('delete-users');
-
         $user->delete();
 
         return redirect()->route('app.users.index')->with('success', 'User Deleted');

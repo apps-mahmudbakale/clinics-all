@@ -22,9 +22,10 @@
         <!-- /.content-header -->
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" style="font-size: 13px;">
             <div class="container-fluid">
                 <div class="row">
+                    <!--Start System Settings-->
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
@@ -40,70 +41,148 @@
                         </div>
                         <!-- /.card -->
                     </div>
+                    <!--End System Settings-->
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">HMO Groups</h3>
+                                <h3 class="card-title">Services</h3>
                                 <button class="btn bg-gradient-secondary float-right" data-toggle="modal"
-                                    data-target="#modal-lg">New</button>
+                                    data-target="#new-service-modal">New</button>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                
+                               <livewire:service-categories/>
                             </div>
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
                     </div>
-                    <!-- /.col -->
+                    <!--Start Hmo Group Settings-->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">HMO Groups</h3>
+                                <button class="btn bg-gradient-secondary float-right" data-toggle="modal"
+                                    data-target="#new-hmo-modal">New</button>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <livewire:hmo-groups/>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--End Hmo Group Settings-->
+
+                    <!-- Start Department Setting -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Departments</h3>
+                                <button class="btn bg-gradient-secondary float-right" data-toggle="modal"
+                                    data-target="#new-dept-modal">New</button>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <livewire:department/>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- End of Deparment Setting -->
+
+                    <!-- Start Department Setting -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Documents</h3>
+                                <button class="btn bg-gradient-secondary float-right" data-toggle="modal"
+                                    data-target="#new-doc-modal">New</button>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <livewire:document/>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- End of Deparment Setting -->
+                     <!-- Start Payment Methods Setting -->
+                     <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Payment Methods</h3>
+                                <button class="btn bg-gradient-secondary float-right" data-toggle="modal"
+                                    data-target="#new-paymentMethod-modal">New</button>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <livewire:payment-methods/>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- End of Religions Setting -->
+                     <!-- Start Payment Methods Setting -->
+                     <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Religions</h3>
+                                <button class="btn bg-gradient-secondary float-right" data-toggle="modal"
+                                    data-target="#new-religion-modal">New</button>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <livewire:religions/>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- End of Religions Setting -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Job/Position</h3>
+                                <button class="btn bg-gradient-secondary float-right" data-toggle="modal"
+                                    data-target="#new-position-modal">New</button>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <livewire:positions/>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                     <!-- Start HMO Plans Setting -->
+                     <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">HMO Plans</h3>
+                                <button class="btn bg-gradient-secondary float-right" data-toggle="modal"
+                                    data-target="#new-plan-modal">New</button>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <livewire:hmo-plans/>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- End of Deparment Setting -->
+
                 </div>
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
     </div>
-    <div class="modal fade" id="modal-lg">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">System Settings</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('app.update.system.settings') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            Clinic Name
-                            <input type="text" name="clinic_name" value="{{ $system->clinic_name }}"
-                                class="form-control">
-                        </div>
-                        <div class="form-group">
-                            Clinic Logo
-                            <input type="file" name="logo" value="" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            Clinic Logo
-                            <input type="file" name="favicon" value="" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            Address
-                            <textarea class="form-control" rows="10" name="address">{{ $system->address }}</textarea>
-                        </div>
-                        <div class="form-group">
-                            Footer
-                            <input type="text" class="form-control" name="footer" value="{{ $system->footer }}">
-                        </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                    </form>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
+    @include('settings.settings-modal')
+   
     <!-- /.modal -->
 @endsection

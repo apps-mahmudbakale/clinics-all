@@ -52,17 +52,20 @@
                                             <td>{{$user->email}}</td>
                                             <td>{{$user->phone}}</td>
                                             <td>{{$user->roles->first()->name}}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-default" data-toggle="dropdown">
-                                                    <i class="fa fa-ellipsis-h"></i>
-                                                    <div class="dropdown-menu" role="menu">
-                                                      <a class="dropdown-item"  onclick="Livewire.emit('openModal', 'edit-user')">Edit</a>
-                                                      <div class="dropdown-divider"></div>
-                                                      <a class="dropdown-item" href="#" id="del{{ $user->id }}"
-                                                        data-value="{{ $user->id }}">Delete</a>
+                                            <td class="text-right">
+                                                <span class="dropdown ml-1">
+                                                    <button class="btn btn-default btn-sm dropdown-toggle align-text-top"
+                                                        data-boundary="viewport" data-toggle="dropdown">Actions</button>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="{{ route('app.users.edit', $user->id) }}">
+                                                            Edit
+                                                        </a>
+                                                        <button class="dropdown-item" id="del{{ $user->id }}" data-value="{{ $user->id }}">
+                                                            Delete
+                                                        </button>
                                                     </div>
-                                                  </button>
-                                                  <script>
+                                                </span>
+                                                <script>
                                                     document.querySelector('#del{{ $user->id }}').addEventListener('click', function(e) {
                                                         // alert(this.getAttribute('data-value'));
                                                         Swal.fire({

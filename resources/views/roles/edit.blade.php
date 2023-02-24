@@ -1,36 +1,61 @@
+
 @extends('layouts.app')
-@section('title', 'Dashboard')
+
 @section('content')
-<div class="container-xl">
-  <!-- Page title -->
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">Create Role</h3>
-      <a href="{{route('app.roles.index')}}" class="btn btn-primary ml-auto">Back</a>
-    </div>
-    <div class="card-body border-bottom py-3">
-        <form action="{{ route('app.roles.update', [$role->id]) }}" method="POST">
-            @method('PUT')
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Roles</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{route('app.dashboard')}}">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="{{route('app.roles.index')}}">Roles</a></li>
+              <li class="breadcrumb-item active">Update Role</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-header">
+              <h3 class="card-title">Update Roles</h3>
+          </div>
+          <form action="{{route('app.roles.update', $role->id)}}" method="POST">
             @csrf
-            <div class="form-group">
-                Role
-                <input type="text" name="name" value="{{ old('name', isset($role) ? $role->name : '') }}" class="form-control">
+            @method('PUT')
+            <!-- form start -->
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" value="{{old('name', isset($role) ? $role->name : '')}}" class="form-control" placeholder="Name">
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    @foreach ($permissions as $permission)
+                    <div class="col-sm-2">
+                        <input class="" type="checkbox" value="{{$permission->id}}" name="permissions[]" {{ (in_array($permission->id, old('permissions', [])) || isset($role) && $role->permissions->contains($permission->id)) ? 'checked' : '' }} id="customCheckbox">
+                        <label>{{$permission->name}}</label>
+                    </div>
+                    @endforeach
+                </div>
+                  </div>
+                    
             </div>
-            <div class="form-group">
-                Permissions
-                <select name="permissions[]" id="" class="form-control" multiple>
-                    @foreach($permissions as $id => $permission)
-                    <option value="{{ $id }}" {{ (in_array($id, old('permissions', [])) || isset($role) && $role->permissions->contains($id)) ? 'selected' : '' }}>
-                          {{ $permission }}
-                    </option>
-                @endforeach
-                </select>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-    </div>
-    <div class="card-footer d-flex align-items-center">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
+        </form>
+        </div>
+      </div>
+    </section>
   </div>
-</div>
 @endsection

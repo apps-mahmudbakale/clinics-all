@@ -1,100 +1,116 @@
 <div>
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Roles</h3>
-            <a href="{{ route('app.roles.create') }}" class="btn btn-primary ml-auto">Create Role</a>
-        </div>
-        <div class="card-body border-bottom py-3">
-            <div class="d-flex">
-                <div class="text-muted">
-                    Show
-                    <div class="mx-2 d-inline-block">
-                        <input type="number" wire:model="perPage" class="form-control" value="8" size="3">
-                    </div>
-                    entries
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Roles</h3>
+                    <a href="{{ route('app.roles.create') }}" class="btn btn-success float-right"><i
+                            class="fa fa-plus-circle"></i></a>
                 </div>
-                <div class="ml-auto text-muted">
-                    Search:
-                    <div class="ml-2 d-inline-block">
-                        <input type="text" wire:model.debounce.300ms="search" class="form-control">
+                <!-- /.card-header -->
+                <div class="card-body">
+                    
+                    <div id="users_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_length" id="users_length"><label>Show <select wire:model="perPage"
+                                            aria-controls="roles"
+                                            class="custom-select custom-select-sm form-control form-control-sm">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select> entries</label></div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div id="users_filter" class="dataTables_filter"><label>Search:<input type="search"
+                                            class="form-control form-control-sm" wire:model.debounce.300ms='search' placeholder=""
+                                            aria-controls="roles"></label></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="roles" class="table table-striped dataTable no-footer"
+                                    role="grid" aria-describedby="users_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>S/N</th>
+                                            <th>Name</th>
+                                            <th>Created</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            @foreach($roles as $role)
+                                            <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$role->name}}</td>
+                                            <td>{{$role->created_at->diffForHumans()}}</td>
+                                            <td class="text-right">
+                                                <span class="dropdown ml-1">
+                                                    <button class="btn btn-default btn-sm dropdown-toggle align-text-top"
+                                                        data-boundary="viewport" data-toggle="dropdown">Actions</button>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="{{ route('app.roles.edit', $role->id) }}">
+                                                            Edit
+                                                        </a>
+                                                        <button class="dropdown-item" id="del{{ $role->id }}" data-value="{{ $role->id }}">
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </span>
+                                                <script>
+                                                    document.querySelector('#del{{ $role->id }}').addEventListener('click', function(e) {
+                                                        // alert(this.getAttribute('data-value'));
+                                                        Swal.fire({
+                                                            title: 'Are you sure?',
+                                                            text: "You won't be able to revert this!",
+                                                            icon: 'warning',
+                                                            showCancelButton: true,
+                                                            confirmButtonColor: '#3085d6',
+                                                            cancelButtonColor: '#d33',
+                                                            confirmButtonText: 'Yes, delete it!'
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                document.getElementById('del#'+this.getAttribute('data-value')).submit();
+                                                                // Swal.fire(
+                                                                //     'Deleted!',
+                                                                //     'Your file has been deleted.',
+                                                                //     'success'
+                                                                // )
+                                                            }
+                                                        })
+                                                    })
+                                                </script>
+                                                <form id="del#{{ $role->id }}"
+                                                    action="{{ route('app.roles.destroy', $role->id) }}" method="POST"
+                                                     style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                            @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="dataTables_info" id="users_info" role="status" aria-live="polite">Showing <b>{{ $roles->firstItem() }}</b> to
+                                    <b>{{ $roles->lastItem() }}</b> out of <b>{{ $roles->total() }}</b> entries</div>
+                            </div>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="dataTables_paginate paging_simple_numbers" id="users_paginate">
+                                    {{ $roles->links() }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <!-- /.card-body -->
             </div>
-        </div>
-        <div class="table-responsive">
-            <table class="table card-table table-vcenter text-nowrap datatable">
-                <thead>
-                    <tr>
-                        <th class="w-1"># <svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-sm text-dark icon-thick" width="24" height="24" viewBox="0 0 24 24"
-                                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" />
-                                <polyline points="6 15 12 9 18 15" />
-                            </svg>
-                        </th>
-                        <th>Name <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" />
-                                <polyline points="7 8 3 12 7 16" />
-                                <polyline points="17 8 21 12 17 16" />
-                                <line x1="14" y1="4" x2="10" y2="20" />
-                            </svg>
-                        </th>
-                        <th>Created At <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" />
-                                <polyline points="7 8 3 12 7 16" />
-                                <polyline points="17 8 21 12 17 16" />
-                                <line x1="14" y1="4" x2="10" y2="20" />
-                            </svg>
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        @foreach ($roles as $role)
-                            <td><span class="text-muted">{{ $loop->iteration }}</span></td>
-                            <td>{{ $role->name }}</td>
-                            <td>{{ $role->created_at->diffForHumans() }}</td>
-                            <td class="text-right">
-                                <span class="dropdown ml-1">
-                                    <button class="btn btn-white btn-sm dropdown-toggle align-text-top"
-                                        data-boundary="viewport" data-toggle="dropdown">Actions</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="{{ route('app.roles.show', $role->id) }}">
-                                            Show
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('app.roles.edit', $role->id) }}">
-                                            Edit
-                                        </a>
-                                        <a class="dropdown-item" href=""
-                                            onclick="event.preventDefault(); document.getElementById('del#{{ $role->id }}').submit();">
-                                            Delete
-                                        </a>
-                                    </div>
-                                </span>
-                                <form id="del#{{ $role->id }}" action="{{ route('app.roles.destroy', $role->id) }}"
-                                    method="POST" onsubmit="return confirm('Are you sure');"
-                                    style="display: inline-block;">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                </form>
-                            </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer d-flex align-items-center">
-            <p class="m-0 text-muted">Showing <span>{{ $roles->firstItem() }}</span> to
-                <span>{{ $roles->lastItem() }}</span> of <span>{{ $roles->total() }}</span> entries</p>
-            <div class="ml-auto">
-                {{ $roles->links() }}
-            </div>
-        </div>
-    </div>
+            <!-- /.card -->
+        </div><!-- /.container-fluid -->
+    </section>
 </div>

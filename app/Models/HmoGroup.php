@@ -11,5 +11,8 @@ class HmoGroup extends Model
 
     protected $fillable = [
         'name',
+        'phone',
+        'email',
+        'address'
     ];
 }

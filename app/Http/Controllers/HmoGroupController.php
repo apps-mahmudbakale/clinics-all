@@ -35,7 +35,8 @@ class HmoGroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $hmo = HmoGroup::create($request->all());
+        return back()->with('success', 'HMO Group Added');
     }
 
     /**
@@ -78,8 +79,12 @@ class HmoGroupController extends Controller
      * @param  \App\Models\HmoGroup  $hmoGroup
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HmoGroup $hmoGroup)
+    public function destroy($id)
     {
-        //
+        $hmoGroup = HmoGroup::find($id);
+        
+        $hmoGroup->delete();
+
+        return back()->with('success', 'HMO Deleted');
     }
 }

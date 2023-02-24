@@ -12,6 +12,7 @@ class Users extends Base
     {
         if ($this->search) {
             $users = User::query()
+                ->whereHas('roles')
                 ->where('firstname', 'like', '%' . $this->search . '%')
                 ->Orwhere('email', 'like', '%' . $this->search . '%')
                 ->paginate(10);
@@ -21,8 +22,7 @@ class Users extends Base
                 ['users' => $users]
             );
         } else {
-            $users = User::query()
-                ->orderBy($this->sortBy, $this->sortDirection)
+            $users = User::whereHas('roles')->orderBy($this->sortBy, $this->sortDirection)
                 ->paginate($this->perPage);
             return view(
                 'livewire.users',
