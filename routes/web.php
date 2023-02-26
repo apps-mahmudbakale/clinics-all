@@ -11,6 +11,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ReligionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\SystemSettingsController;
 use App\Http\Controllers\ServiceCategoryController;
@@ -49,8 +50,9 @@ Route::group(['prefix' => 'app', 'as' => 'app.', 'middleware' => 'auth'], functi
     Route::post('settings/currency', [SystemSettingsController::class, 'updateStoreCurrency'])->name('update.store.currency');
     Route::resource('categories', ServiceCategoryController::class);
     Route::resource('positions', PositionController::class);
-    // Route::resource('hmo-plans', HmoPlanController::class);
+    Route::resource('appointments', AppointmentController::class);
     // Route::resource('hmo-plans', HmoPlanController::class);
 });
 Route::get('getLGA/{state}', [DashboardController::class, 'getLGA']);
+Route::post('create-account', [PatientController::class, 'createAccount'])->name('create-account');
 

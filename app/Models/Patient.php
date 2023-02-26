@@ -33,4 +33,9 @@ class Patient extends Model
         'dependent',
         'principal_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

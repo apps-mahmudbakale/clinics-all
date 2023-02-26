@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Jajo\NG;
+use App\Models\User;
 use App\Models\Patient;
 use App\Models\Religion;
 use Illuminate\Http\Request;
@@ -44,6 +45,17 @@ class PatientController extends Controller
     {
         
         $patient = Patient::create($request->all());
+    }
+
+
+    public function createAccount(Request $request)
+    {
+        $user = User::create(array_merge($request->except(['date_of_birth', 'gender', 'password']), ['password'=> bcrypt($request->password)]));
+        $user->assignRole('user');
+        $hospital_no = UniqueIdGenerator::generate(['table' => 'patients', 'length' => 4, ]);
+        $patient = Patient::create(array_merge($request->except(['password']), ['hospital_no' => $hospital_no, 'user_id'=> $user->id ]));
+
+        return redirect()->route('register')->with('success', 'Account Created Successfully');
     }
 
     /**

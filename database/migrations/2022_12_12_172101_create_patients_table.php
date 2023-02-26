@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->string('hospital_no')->unique()->nullable();
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('firstname')->nullable();
             $table->string('middlename')->nullable();
             $table->string('lastname')->nullable();

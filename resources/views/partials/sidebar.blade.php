@@ -21,6 +21,14 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                @role('user')
+                <li class="nav-item">
+                    <a href="{{route('app.appointments.index')}}" class="nav-link">
+                        <i class="nav-icon fa fa-calendar"></i>
+                        <p>Appointments</p>
+                    </a>
+                </li>
+                @endrole
                 @can('read-users')
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
@@ -48,7 +56,7 @@
                 </li>
                 @can('read-settings')
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('app.appointments.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-calendar"></i>
                         <p>Appointments</p>
                     </a>
