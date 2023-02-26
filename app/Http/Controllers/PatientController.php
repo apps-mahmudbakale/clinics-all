@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Jajo\NG;
 use App\Models\Patient;
+use App\Models\Religion;
 use Illuminate\Http\Request;
+use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
 class PatientController extends Controller
 {
@@ -24,7 +27,11 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return view('patients.create');
+        $ng = new NG();
+        $states = $ng->states; 
+        $religions = Religion::all();
+        $hospital_no = UniqueIdGenerator::generate(['table' => 'patients', 'length' => 4, ]);
+        return view('patients.create', compact('states', 'religions', 'hospital_no'));
     }
 
     /**
@@ -35,7 +42,8 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $patient = Patient::create($request->all());
     }
 
     /**

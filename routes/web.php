@@ -52,3 +52,5 @@ Route::group(['prefix' => 'app', 'as' => 'app.', 'middleware' => 'auth'], functi
     // Route::resource('hmo-plans', HmoPlanController::class);
     // Route::resource('hmo-plans', HmoPlanController::class);
 });
+Route::get('getLGA/{state}', [DashboardController::class, 'getLGA']);
+

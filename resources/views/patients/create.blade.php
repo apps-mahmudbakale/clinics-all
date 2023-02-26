@@ -32,11 +32,11 @@
                     <!-- /.card-header -->
                     <form action="{{ route('app.patients.store') }}" method="POST">
                         @csrf
-                        <!-- form start -->
+                        <!-- form start --> 
                         <div class="card-body row">
                             <div class="form-group col-md-4">
-                                Folder Number
-                                <input type="text" name="folder_no" readonly class="form-control">
+                                Hospital  Number
+                                <input type="text" name="hospital_no" readonly value="HRN-{{ $hospital_no }}" class="form-control">
                             </div>
                             <div class="form-group col-md-4">
                                 First Name
@@ -68,11 +68,12 @@
         
                             <div class="form-group col-md-4">
                                 Religion
-                                <select name="religion" id="" class="form-control">
+                                <select name="religion_id" id="" class="form-control">
                                     <option value=""></option>
-                                    <option value="Christianity">Christianity</option>
-                                    <option value="Islam">Islam</option>
-                                    <option value="Traditionalist">Traditionalist</option>
+                                    @foreach ($religions as $religion)
+                                    <option value="{{ $religion->id }}">
+                                        {{ $religion->name }}</option>
+                                @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
@@ -90,13 +91,18 @@
         
                             <div class="form-group col-md-4">
                                 State of Residence
-                                <select name="state_of_residence" id="" class="form-control">
-                                    <option value=""></option>
+                                <select name="state_of_residence" id="state_of_residence" class="form-control">
+                                    <option selected value="">State of Residence...
+                                    </option>
+                                    @foreach ($states as $state)
+                                        <option value="{{ $state }}">
+                                            {{ $state }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 LGA
-                                <select name="lga_of_residence" id="" class="form-control">
+                                <select name="lga_of_residence" id="lga_of_residence" class="form-control">
                                     <option value=""></option>
                                 </select>
                             </div>
@@ -107,51 +113,64 @@
         
                             <div class="form-group col-md-6">
                                 State of Origin
-                                <select name="state_of_residence" id="" class="form-control">
-                                    <option value=""></option>
+                                <select name="state_of_origin" id="state_of_origin" class="form-control">
+                                    <option selected value="">State of Origin...
+                                    </option>
+                                    @foreach ($states as $state)
+                                        <option value="{{ $state }}">
+                                            {{ $state }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
                                 LGA
-                                <select name="lga_of_residence" id="" class="form-control">
+                                <select name="lga_of_origin" id="lga_of_origin" class="form-control">
                                     <option value=""></option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 Next of Kin's Name
-                                <input type="text" name="nok_name" class="form-control">
+                                <input type="text" name="next_of_kin_name" class="form-control">
                             </div>
                             <div class="form-group col-md-4">
                                 Next of Relationship
-                               <select name="nok_relation" id="" class="form-control"></select>
+                               <select name="next_of_kin_relation" id="" class="form-control">
+                                <option>Father</option>
+                                <option>Mother</option>
+                                <option>Husband</option>
+                                <option>Wife</option>
+                                <option>Son</option>
+                                <option>Daughter</option>
+                                <option>Other</option>
+                               </select>
                             </div>
                             <div class="form-group col-md-4">
                                 Next of Kin's Phone
-                                <input type="text" name="nok_phone" class="form-control">
+                                <input type="text" name="next_of_kin_phone" class="form-control">
                             </div>
                             <div class="form-group col-md-12">
                                 Next of Kin's Address
-                                <textarea name="nok_address" id="" cols="30" rows="10" class="form-control"></textarea>
+                                <textarea name="next_of_kin_address" id="" cols="30" rows="10" class="form-control"></textarea>
                             </div>
                             <div class="form-group col-md-12">
                                 Phone Number
-                                <input type="text" name="nok_phone" class="form-control">
+                                <input type="text" name="phone" class="form-control">
                             </div>
                             <hr>
                             <div class="form-group col-md-4">
                                Hmo Plan
-                               <select name="" id="" class="form-control"></select>
+                               <select name="hmo_id" id="" class="form-control"></select>
                             </div>
                             <div class="form-group col-md-4">
                                 Dependent?
-                                <select name="" id="" class="form-control">
-                                    <option value="">Yes</option>
-                                    <option value="">No</option>
+                                <select name="dependent" id="" class="form-control">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
                                 </select>
                              </div>
                              <div class="form-group col-md-4">
                                 Principal ID
-                               <input type="text" class="form-control">
+                               <input type="text" name="principal_id" class="form-control">
                              </div>
                         </div>
                         <!-- /.card-body -->
@@ -167,5 +186,66 @@
         </section>
         <!-- /.content -->
     </div>
+    <script>
+        var state_residence = document.querySelector('#state_of_residence');
+        var lga_residence = document.querySelector('#lga_of_residence');
+
+        lga_residence.length = 0;
+
+        let defaultOption = document.createElement('option');
+        defaultOption.text = 'Choose LGA';
+
+        lga_residence.add(defaultOption);
+        lga_residence.selectedIndex = 0;
+
+        state_residence.addEventListener("change", function() {
+            // alert(state_residence.value);
+
+            fetch('/getLGA/' + state_residence.value)
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data)
+					document.getElementById("lga_of_residence").innerHTML = "";
+                    let option;
+                    for (let i = 0; i < data.length; i++) {
+                        option = document.createElement('option');
+                        option.text = data[i];
+                        option.value = data[i];
+                        lga_residence.add(option);
+                    }
+
+                });
+        })
+
+        var state_origin = document.querySelector('#state_of_origin');
+        var lga_origin = document.querySelector('#lga_of_origin');
+
+        lga_origin.length = 0;
+
+        let defaultOption1 = document.createElement('option');
+        defaultOption1.text = 'Choose LGA';
+
+        lga_origin.add(defaultOption1);
+        lga_origin.selectedIndex = 0;
+
+        state_origin.addEventListener("change", function() {
+            // alert(state_origin.value);
+
+            fetch('/getLGA/' + state_origin.value)
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data)
+					document.getElementById("lga_of_origin").innerHTML = "";
+                    let option;
+                    for (let i = 0; i < data.length; i++) {
+                        option = document.createElement('option');
+                        option.text = data[i];
+                        option.value = data[i];
+                        lga_origin.add(option);
+                    }
+
+                });
+        })
+    </script>
     <!-- /.content-wrapper -->
 @endsection

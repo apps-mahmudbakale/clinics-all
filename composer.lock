@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b907b7251f29ff147e29d1a398f52c6",
+    "content-hash": "2bc34da561435df4833ec3cda9db758e",
     "packages": [
         {
             "name": "brick/math",
@@ -1236,6 +1236,46 @@
                 }
             ],
             "time": "2022-10-26T14:07:24+00:00"
+        },
+        {
+            "name": "jajo/ng",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/donjajo/NG.git",
+                "reference": "e167dcc496c5fe53e7b3264954a35fdb19e7169e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/donjajo/NG/zipball/e167dcc496c5fe53e7b3264954a35fdb19e7169e",
+                "reference": "e167dcc496c5fe53e7b3264954a35fdb19e7169e",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jajo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jajo",
+                    "email": "me@donjajo.com"
+                }
+            ],
+            "description": "Class to get data on Nigerian states, capitals and local government areas",
+            "support": {
+                "issues": "https://github.com/donjajo/NG/issues",
+                "source": "https://github.com/donjajo/NG/tree/master"
+            },
+            "time": "2018-06-14T09:36:50+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3475,6 +3515,50 @@
                 }
             ],
             "time": "2022-12-31T22:20:34+00:00"
+        },
+        {
+            "name": "sirajcse/laravel-unique-id-generator",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SirajCse/laravel-unique-id-generator.git",
+                "reference": "4982afb5a3c9d243500f516c1f9be565fceab4ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SirajCse/laravel-unique-id-generator/zipball/4982afb5a3c9d243500f516c1f9be565fceab4ba",
+                "reference": "4982afb5a3c9d243500f516c1f9be565fceab4ba",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "sirajcse\\UniqueIdGenerator\\UniqueIdGeneratorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "sirajcse\\UniqueIdGenerator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Md. Siraj-Ud-Doulla",
+                    "email": "sirajuddoulla@gmail.com"
+                }
+            ],
+            "description": "Generate custom Unique ID or Code (With Prefix or Suffix Or Both Or Only Unique Id) Or reset your ID after change of Prefix or Suffix Or Both  in laravel framework",
+            "support": {
+                "issues": "https://github.com/SirajCse/laravel-unique-id-generator/issues",
+                "source": "https://github.com/SirajCse/laravel-unique-id-generator/tree/v1.0.1"
+            },
+            "time": "2022-05-12T17:25:31+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
