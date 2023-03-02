@@ -17,10 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('hospital_no')->unique()->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('firstname')->nullable();
             $table->string('middlename')->nullable();
-            $table->string('lastname')->nullable();
-            $table->string('email')->nullable();
             $table->string('gender')->nullable();
             $table->string('phone')->nullable();
             $table->date('date_of_birth')->nullable();

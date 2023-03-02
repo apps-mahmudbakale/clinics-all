@@ -21,7 +21,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                @role('user')
+                @role('patient')
                 <li class="nav-item">
                     <a href="{{route('app.appointments.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-calendar"></i>

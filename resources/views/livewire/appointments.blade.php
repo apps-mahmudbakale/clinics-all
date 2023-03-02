@@ -37,7 +37,7 @@
                                         <tr role="row">
                                             <th>S/N</th>
                                             <th>Patient</th>
-                                            <th>HRN No</th>
+                                            {{-- <th>HRN No</th> --}}
                                             <th>Date</th>
                                             <th>Clinic</th>
                                             <th></th>
@@ -48,7 +48,7 @@
                                             <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$appointment->user->Fullname()}}</td>
-                                            <td>{{$appointment->user->patient->hospital_no}}</td>
+                                            {{-- <td>{{$appointment->user->patient->hospital_no}}</td> --}}
                                             <td>{{$appointment->date}}</td>
                                             <td>{{$appointment->clinic}}</td>
                                             <td class="text-right">
