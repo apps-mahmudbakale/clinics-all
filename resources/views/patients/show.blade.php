@@ -52,7 +52,7 @@
                     <li class="nav-item"><a class="nav-link" href="#vital_signs" data-toggle="tab">Vital Signs</a></li>
                     <li class="nav-item"><a class="nav-link" href="#diagnosis" data-toggle="tab">Diagnoses</a></li>
                     <li class="nav-item"><a class="nav-link" href="#diagnosis" data-toggle="tab">Lab Requests</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#diagnosis" data-toggle="tab">Diagnoses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#diagnosis" data-toggle="tab">Imaging</a></li>
                   </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">
