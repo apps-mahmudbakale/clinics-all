@@ -36,7 +36,7 @@
                         <div class="card-body row">
                             <div class="form-group col-md-4">
                                 Hospital  Number
-                                <input type="text" name="hospital_no" readonly value="HRN-{{ $hospital_no }}" class="form-control">
+                                <input type="text" name="hospital_no" readonly value="" class="form-control">
                             </div>
                             <div class="form-group col-md-4">
                                 First Name

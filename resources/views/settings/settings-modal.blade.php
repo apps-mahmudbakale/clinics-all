@@ -20,7 +20,7 @@
                         <input type="file" name="logo" value="" class="form-control">
                     </div>
                     <div class="form-group">
-                        Clinic Logo
+                        Clinic Favicon
                         <input type="file" name="favicon" value="" class="form-control">
                     </div>
                     <div class="form-group">

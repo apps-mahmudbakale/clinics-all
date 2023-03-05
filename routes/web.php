@@ -5,6 +5,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HmoPlanController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\HmoGroupController;
 use App\Http\Controllers\PositionController;
@@ -49,7 +50,7 @@ Route::group(['prefix' => 'app', 'as' => 'app.', 'middleware' => 'auth'], functi
     Route::post('settings/currency', [SystemSettingsController::class, 'updateStoreCurrency'])->name('update.store.currency');
     Route::resource('categories', ServiceCategoryController::class);
     Route::resource('positions', PositionController::class);
-    // Route::resource('hmo-plans', HmoPlanController::class);
+    Route::resource('tariffs', ServiceController::class);
     // Route::resource('hmo-plans', HmoPlanController::class);
 });
 Route::get('getLGA/{state}', [DashboardController::class, 'getLGA']);

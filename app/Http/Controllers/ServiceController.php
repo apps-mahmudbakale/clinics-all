@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -24,7 +25,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        //
+        return view('services.create');
     }
 
     /**
@@ -35,7 +36,9 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $service = Service::create($request->all());
+        return back()->with('success', 'Tariff Added');
     }
 
     /**
@@ -44,9 +47,10 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function show(Service $service)
+    public function show($id)
     {
-        //
+        $category = ServiceCategory::find($id);
+        return view('services.show', compact('category'));
     }
 
     /**
@@ -78,8 +82,10 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Service $service)
+    public function destroy($id)
     {
-        //
+        $service = Service::find($id);
+        $service->delete();
+        return back()->with('success', 'Tariff Deleted');
     }
 }

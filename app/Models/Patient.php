@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,11 +11,9 @@ class Patient extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'hospital_no',
-        'firstname',
         'middlename',
-        'lastname',
-        'email',
         'phone',
         'date_of_birth',
         'gender',
@@ -33,4 +32,15 @@ class Patient extends Model
         'dependent',
         'principal_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+    public function getAge()
+    {
+        return Carbon::parse($this->date_of_birth)->age." yrs";
+    }
 }

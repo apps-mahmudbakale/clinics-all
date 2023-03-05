@@ -175,6 +175,20 @@
                         </div>
                         <!-- /.card -->
                     </div>
+                     <!-- Start HMO Plans Setting -->
+                     <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Service Tariifs</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <livewire:services/>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
                     <!-- End of Deparment Setting -->
 
                 </div>
@@ -182,6 +196,7 @@
         </section>
         <!-- /.content -->
     </div>
+   
     @include('settings.settings-modal')
    
     <!-- /.modal -->

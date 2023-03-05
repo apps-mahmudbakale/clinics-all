@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Jajo\NG;
+use App\Models\User;
 use App\Models\Patient;
 use App\Models\Religion;
 use Illuminate\Http\Request;
@@ -42,8 +43,22 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $patient = Patient::create($request->all());
+        $user = User::create(array_merge($request->except(['date_of_birth', 'gender', 'password']), ['password'=> bcrypt($request->password)]));
+        $user->assignRole('patient');
+        $hospital_no = UniqueIdGenerator::generate(['table' => 'patients', 'length' => 4, ]);
+        $patient = Patient::create(array_merge($request->except(['password']), ['hospital_no' => $hospital_no, 'user_id'=> $user->id ]));
+        return redirect()->route('app.patients.index')->with('success', 'Patient Created Successfully');
+    }
+
+
+    public function createAccount(Request $request)
+    {
+        $user = User::create(array_merge($request->except(['date_of_birth', 'gender', 'password']), ['password'=> bcrypt($request->password)]));
+        $user->assignRole('patient');
+        $hospital_no = UniqueIdGenerator::generate(['table' => 'patients', 'length' => 4, ]);
+        $patient = Patient::create(array_merge($request->except(['password']), ['hospital_no' => $hospital_no, 'user_id'=> $user->id ]));
+
+        return redirect()->route('register')->with('success', 'Account Created Successfully');
     }
 
     /**
@@ -54,7 +69,7 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
+        return view('patients.show', compact('patient'));
     }
 
     /**
